@@ -1,5 +1,5 @@
 <r:script>
     jQuery(function() {
-        jQuery("#${formName}").submit(stripeFormSubmitHandler);
+        stripe_utils.enable();
     });
 </r:script>

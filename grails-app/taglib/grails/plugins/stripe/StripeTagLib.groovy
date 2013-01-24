@@ -22,35 +22,16 @@ class StripeTagLib {
     /**
      * Creates the JavaScript required to process the credit card form.
      *
-     * @attr formName REQUIRED the field formName
+     * @attr formSelecter REQUIRED the field formSelecter
      */
     def script = { attrs, body ->
-        Stripe.apiKey = grailsApplication.config.grails.plugins.stripe.secretKey
-        def publishableKey = grailsApplication.config.grails.plugins.stripe.publishableKey
-        if(!publishableKey){
-            throw new IllegalArgumentException("publishableKey must be provided! Please set it in your grails config")
-        }
-        out << render(template: "/stripe/script", model: [ publishableKey: publishableKey ], plugin: 'stripe')
+        verifyAttributePresent(attrs, 'formSelecter')
+        out << render(template: "/stripe/script", model: [ publishableKey: getPublishableKey(), formSelecter:attrs.formSelecter ], plugin: 'stripe')
+
         def initialiseForm = attrs.initForm==null || Boolean.parseBoolean(attrs.initForm)
-        setupPage(attrs.formName, initialiseForm)
-    }
-    
-    private void setupPage(String formName, boolean initialiseForm){
-        if(!formName){
-            throw new IllegalArgumentException("formName must be provided! Please pass it as an attribute")
-        }
-        else{
-            emitResponseHandler(formName)
-            if(initialiseForm) emitPageSetup(formName)
-        }
-    }
-    
-    private void emitResponseHandler(String formName){
-        out << render(template: "/stripe/responseHandler", model: [formName: formName], plugin: 'stripe')
-    }
-    
-    private void emitPageSetup(String formName){
-        out << render(template: "/stripe/pageSetup", model: [formName: formName], plugin: 'stripe')
+        if(initialiseForm){
+            out << render(template: "/stripe/pageSetup", plugin: 'stripe')
+	}
     }
     
     /**
@@ -59,6 +40,20 @@ class StripeTagLib {
     def creditCardInputs = { attrs, body ->
         def cssClass = attrs.cssClass
         out << render(template: "/stripe/creditCardInputs", model: [cssClass: cssClass], plugin: 'stripe')
+    }
+
+    private def getPublishableKey() {
+        def publishableKey = grailsApplication.config.grails.plugins.stripe.publishableKey
+        if(!publishableKey){
+            throw new IllegalArgumentException("publishableKey must be provided! Please set it in your grails config")
+        }
+        return publishableKey
+    }
+
+    private def verifyAttributePresent(attrs, name) {
+        if(!attrs[name]){
+            throw new IllegalArgumentException("$name must be provided! Please pass it as an attribute")
+        }
     }
 }
 

@@ -31,16 +31,17 @@ class StripeTagLib {
             throw new IllegalArgumentException("publishableKey must be provided! Please set it in your grails config")
         }
         out << render(template: "/stripe/script", model: [ publishableKey: publishableKey ], plugin: 'stripe')
-        setupPage(attrs.formName)
+        def initialiseForm = attrs.initForm==null || Boolean.parseBoolean(attrs.initForm)
+        setupPage(attrs.formName, initialiseForm)
     }
     
-    private void setupPage(String formName){
+    private void setupPage(String formName, boolean initialiseForm){
         if(!formName){
             throw new IllegalArgumentException("formName must be provided! Please pass it as an attribute")
         }
         else{
             emitResponseHandler(formName)
-            emitPageSetup(formName)
+            if(initialiseForm) emitPageSetup(formName)
         }
     }
     
@@ -54,14 +55,10 @@ class StripeTagLib {
     
     /**
      * Creates the form to input credit card details.
-     *
-     * @attr cssClass REQUIRED the field cssClass
      */
     def creditCardInputs = { attrs, body ->
         def cssClass = attrs.cssClass
-        if(!cssClass){
-            throw new IllegalArgumentException("cssClass must be provided! Please pass it as an attribute")
-        }
         out << render(template: "/stripe/creditCardInputs", model: [cssClass: cssClass], plugin: 'stripe')
     }
 }
+

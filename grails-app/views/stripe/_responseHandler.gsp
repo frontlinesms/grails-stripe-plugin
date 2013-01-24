@@ -1,10 +1,10 @@
 <r:script>
-  function stripeResponseHandler(status, response) {
+    function stripeResponseHandler(status, response) {
         if (response.error) {
             // re-enable the submit button
-            jQuery('.submit-button').removeAttr("disabled");
+            jQuery('#${formName} input[type=submit], ${formName} .submit-button').removeAttr("disabled");
             // show the errors on the form
-            jQuery(".payment-errors").html(response.error.message);
+            jQuery("#stripe-payment-errors").html(response.error.message);
         } else {
             var form$ = jQuery("#${formName}");
             // token contains id, last4, and card type

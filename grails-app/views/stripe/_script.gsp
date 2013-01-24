@@ -5,12 +5,14 @@ this.stripe_utils = (function() {
 	var formSelecter = "${formSelecter}",
 	stripeSubmitButtonSelecter = "${formSelecter} input[type=submit], ${formSelecter} .submit-button",
 	stripeResponseHandler = function(status, response) {
-		var form$, token;
+		var errorElement, form$, token;
 		if (response.error) {
 			// re-enable the submit button
 			jQuery(stripeSubmitButtonSelecter).removeAttr("disabled");
 			// show the errors on the form
-			jQuery("#stripe-payment-errors").html(response.error.message);
+			errorElement = jQuery("#stripe-payment-errors");
+			errorElement.show();
+			errorElement.html(response.error.message);
 		} else {
 			form$ = jQuery(formSelecter);
 			// token contains id, last4, and card type

@@ -12,4 +12,8 @@ class StripeGrailsPlugin {
     def issueManagement = [ system: "GitHub", url: "https://github.com/bobbywarner/grails-stripe/issues" ]
     def scm = [ url: "https://github.com/bobbywarner/grails-stripe" ]
     def developers = [ [ name: "Nicholas Vaidyanathan", email: "visionary.software.solutions@gmail.com" ] ]
+
+    def doWithApplicationContext = {
+        com.stripe.Stripe.apiKey = application.config.grails.plugins.stripe.secretKey
+    }
 }

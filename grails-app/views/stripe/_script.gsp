@@ -3,7 +3,7 @@
 <r:script disposition='head'>
 this.stripe_utils = (function() {
 	var formSelecter = "${formSelecter}",
-	stripeSubmitButtonSelecter = "#subscription-form input[type=submit], #subscription-form .submit-button",
+	stripeSubmitButtonSelecter = "${formSelecter} input[type=submit], ${formSelecter} .submit-button",
 	failureHandler = function(response) {
 		// Default error handler can be overridden
 		var errorElement;

@@ -1,5 +1,5 @@
 class StripeGrailsPlugin {
-    def version = "1.4-frontlinesms-SNAPSHOT"
+    def version = "1.4-frontlinesms"
     def grailsVersion = "1.3.7 > *"
     def dependsOn = ['resources':'1.1.6 > *']
 

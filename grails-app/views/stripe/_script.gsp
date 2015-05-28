@@ -1,6 +1,6 @@
-<r:require module="stripe"/>
+<asset:javascript src="stripe"/>
 
-<r:script disposition='head'>
+<asset:script type="text/javascript">
 this.stripe_utils = (function() {
 	var formSelecter = "${formSelecter}",
 	stripeSubmitButtonSelecter = "${formSelecter} input[type=submit], ${formSelecter} .submit-button",
@@ -65,4 +65,4 @@ this.stripe_utils = (function() {
 		registerCustomFailureHandler:registerCustomFailureHandler
 	};
 }());
-</r:script>
+</asset:script>

@@ -41,7 +41,9 @@ class StripeTagLib {
      */
     def creditCardInputs = { attrs, body ->
         def cssClass = attrs.cssClass
-        out << render(template: "/stripe/creditCardInputs", model: [cssClass: cssClass], plugin: 'stripe')
+        out << render(template: "/stripe/creditCardInputs",
+                model: [cssClass: cssClass, enableAvs: attrs.enableAvs],
+                plugin: 'stripe')
     }
 
     private def getPublishableKey() {

@@ -26,7 +26,9 @@ class StripeTagLib {
      */
     def script = { attrs, body ->
         verifyAttributePresent(attrs, 'formSelecter')
-        out << render(template: "/stripe/script", model: [ publishableKey: getPublishableKey(), formSelecter:attrs.formSelecter ], plugin: 'stripe')
+        out << render(template: "/stripe/script",
+                model: [ publishableKey: getPublishableKey(), formSelecter:attrs.formSelecter, enableAvs: attrs.enableAvs ],
+                plugin: 'stripe')
 
         def initialiseForm = attrs.initForm==null || Boolean.parseBoolean(attrs.initForm)
         if(initialiseForm){

@@ -39,14 +39,26 @@ this.stripe_utils = (function() {
 		// disable the submit button to prevent repeated clicks
 		jQuery(stripeSubmitButtonSelecter).attr("disabled", "disabled");
 		// createToken returns immediately - the supplied callback submits the form if there are no errors
-		Stripe.createToken({
+
+		//check if the user wants to enable address verification or AVS
+		var enableAvs = "${enableAvs == 'true'}"
+
+		var options = {
 			number: jQuery('.card-number').val(),
 			cvc: jQuery('.card-cvc').val(),
 			exp_month: jQuery('.card-expiry-month').val(),
-			exp_year: jQuery('.card-expiry-year').val(),
-			address_line1: jQuery('.card-address-line1').val(),
-			address_zip: jQuery('.card-address-zip').val()
-		}, stripeResponseHandler);
+			exp_year: jQuery('.card-expiry-year').val()
+		}
+
+		if (enableAvs === 'true') {
+			var addressInformation = {
+						address_line1: jQuery('.card-address-line1').val(),
+						address_zip: jQuery('.card-address-zip').val()
+			}
+			jQuery.extend(options, addressInformation)
+		}
+
+		Stripe.createToken(options, stripeResponseHandler);
 		return false; // submit from callback
 	},
 	disable = function() {

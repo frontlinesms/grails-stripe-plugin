@@ -43,7 +43,9 @@ this.stripe_utils = (function() {
 			number: jQuery('.card-number').val(),
 			cvc: jQuery('.card-cvc').val(),
 			exp_month: jQuery('.card-expiry-month').val(),
-			exp_year: jQuery('.card-expiry-year').val()
+			exp_year: jQuery('.card-expiry-year').val(),
+			address_line1: jQuery('.card-address-line1').val(),
+			address_zip: jQuery('.card-address-zip').val()
 		}, stripeResponseHandler);
 		return false; // submit from callback
 	},

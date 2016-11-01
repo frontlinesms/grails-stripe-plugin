@@ -57,6 +57,15 @@ this.stripe_utils = (function() {
 			}
 			jQuery.extend(options, addressInformation)
 		}
+		if(options.number === ''
+			|| options.cvc === ''
+			|| options.exp_month === ''
+			|| options.exp_year === '
+			|| (enableAvs === 'true' && options.address_line1 === '')
+			|| (enableAvs === 'true' && options.address_zip === '')) {
+			failureHandler({ error: { code: 'all.fields.required', message: 'Please fill in all form fields below' }});
+			return false;
+		}
 
 		Stripe.createToken(options, stripeResponseHandler);
 		return false; // submit from callback

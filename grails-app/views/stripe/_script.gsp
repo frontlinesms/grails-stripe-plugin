@@ -13,7 +13,7 @@ this.stripe_utils = (function() {
 		errorElement = jQuery("#stripe-payment-errors");
 		errorElement.show();
 		errorElement.html(response.error.message);
-	}
+	},
 	stripeResponseHandler = function(status, response) {
 		var form$, token;
 		if (response.error) {
@@ -62,7 +62,7 @@ this.stripe_utils = (function() {
 			|| options.exp_month === ''
 			|| options.exp_year === ''
 			|| (enableAvs === 'true' && isEmptyString(options.address_line1))
-			|| (enableAvs === 'true' && isEmptyString(options.address_zip)) {
+			|| (enableAvs === 'true' && isEmptyString(options.address_zip))) {
 			failureHandler({ error: { code: 'all.fields.required', message: 'Please fill in all form fields below' }});
 			return false;
 		}

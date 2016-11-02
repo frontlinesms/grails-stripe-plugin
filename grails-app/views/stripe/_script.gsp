@@ -60,7 +60,7 @@ this.stripe_utils = (function() {
 		if(options.number === ''
 			|| options.cvc === ''
 			|| options.exp_month === ''
-			|| options.exp_year === '
+			|| options.exp_year === ''
 			|| (enableAvs === 'true' && options.address_line1 === '')
 			|| (enableAvs === 'true' && options.address_zip === '')) {
 			failureHandler({ error: { code: 'all.fields.required', message: 'Please fill in all form fields below' }});

@@ -1,5 +1,5 @@
 class StripeGrailsPlugin {
-    def version = '1.6-frontlinesms'
+    def version = '1.7-frontlinesms-TOOLS-1898-SNAPSHOT'
     def grailsVersion = "1.3.7 > *"
 
     def title = "Stripe"

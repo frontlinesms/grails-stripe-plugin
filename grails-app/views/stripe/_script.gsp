@@ -13,7 +13,7 @@ this.stripe_utils = (function() {
 		errorElement = jQuery("#stripe-payment-errors");
 		errorElement.show();
 		errorElement.html(response.error.message);
-	}
+	},
 	stripeResponseHandler = function(status, response) {
 		var form$, token;
 		if (response.error) {
@@ -57,6 +57,15 @@ this.stripe_utils = (function() {
 			}
 			jQuery.extend(options, addressInformation)
 		}
+		if(options.number === ''
+			|| options.cvc === ''
+			|| options.exp_month === ''
+			|| options.exp_year === ''
+			|| (enableAvs === 'true' && isEmptyString(options.address_line1))
+			|| (enableAvs === 'true' && isEmptyString(options.address_zip))) {
+			failureHandler({ error: { code: 'all.fields.required', message: 'Please fill in all form fields below' }});
+			return false;
+		}
 
 		Stripe.createToken(options, stripeResponseHandler);
 		return false; // submit from callback
@@ -66,6 +75,12 @@ this.stripe_utils = (function() {
 	},
 	enable = function() {
 		jQuery(formSelecter).bind("submit", stripeFormSubmitHandler);
+	},
+	/**
+	* Helper method for checking if a string is empty.
+	*/
+	isEmptyString = function(value) {
+  		return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
 	};
 
 	if (window.location.protocol === 'file:') {

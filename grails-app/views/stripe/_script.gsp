@@ -79,7 +79,7 @@ this.stripe_utils = (function() {
 	/**
 	* Helper method for checking if a string is empty.
 	*/
-	isEmptyString = isEmpty(value) {
+	isEmptyString = function(value) {
   		return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
 	};
 

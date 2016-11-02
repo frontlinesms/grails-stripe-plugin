@@ -61,8 +61,8 @@ this.stripe_utils = (function() {
 			|| options.cvc === ''
 			|| options.exp_month === ''
 			|| options.exp_year === ''
-			|| (enableAvs === 'true' && options.address_line1 === '')
-			|| (enableAvs === 'true' && options.address_zip === '')) {
+			|| (enableAvs === 'true' && isEmptyString(options.address_line1))
+			|| (enableAvs === 'true' && isEmptyString(options.address_zip)) {
 			failureHandler({ error: { code: 'all.fields.required', message: 'Please fill in all form fields below' }});
 			return false;
 		}
@@ -75,6 +75,12 @@ this.stripe_utils = (function() {
 	},
 	enable = function() {
 		jQuery(formSelecter).bind("submit", stripeFormSubmitHandler);
+	},
+	/**
+	* Helper method for checking if a string is empty.
+	*/
+	isEmptyString = isEmpty(value) {
+  		return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
 	};
 
 	if (window.location.protocol === 'file:') {

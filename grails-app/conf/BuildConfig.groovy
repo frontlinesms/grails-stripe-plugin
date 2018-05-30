@@ -18,7 +18,7 @@ grails.project.dependency.resolution = {
         mavenCentral()
     }
     dependencies {
-        compile 'com.stripe:stripe-java:1.1.13'
+        compile 'com.stripe:stripe-java:5.36.0'
     }
 
     plugins {
